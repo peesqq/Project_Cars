@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5436:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "cars"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DB_HOST: "postgres"
+      DB_PORT: "5432"
+      DB_USER: "postgres"
+      DB_PASSWORD: "root"
+      DB_NAME: "cars"
+    entrypoint: ["sh", "-c", "sleep 15 && ./main"] #задержка на 15 секунд для того что бы база данных полностью создалась

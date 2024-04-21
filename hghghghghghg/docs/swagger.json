@@ -1,0 +1,239 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API для управления автомобилями и владельцами",
+        "title": "Car Management API",
+        "contact": {},
+        "version": "2.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/cars": {
+            "get": {
+                "description": "Получить список всех автомобилей",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Получить все автомобили",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.Car"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Создать новую машину",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Создать новую машину",
+                "parameters": [
+                    {
+                        "description": "Данные машины",
+                        "name": "car",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Car"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Car"
+                        }
+                    }
+                }
+            }
+        },
+        "/cars/{id}": {
+            "get": {
+                "description": "Получить информацию о машине по её ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Получить информацию о машине",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID машины",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Car"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Обновить информацию о машине по её ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Обновить информацию о машине",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID машины",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Новые данные машины",
+                        "name": "car",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Car"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Car"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Удалить машину по её ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Удалить машину",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID машины",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/carsbynum": {
+            "post": {
+                "description": "Создает новые записи об автомобилях на основе переданных регистрационных номеров",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Сars"
+                ],
+                "summary": "Создать автомобили по номерам",
+                "parameters": [
+                    {
+                        "description": "Список регистрационных номеров автомобилей в двойных кавычках через запятую",
+                        "name": "carNumbers",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.CarNumbers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно создано",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.Car": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "mark": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "owner": {
+                    "type": "integer"
+                },
+                "regNum": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "main.CarNumbers": {
+            "type": "object",
+            "properties": {
+                "regNums": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

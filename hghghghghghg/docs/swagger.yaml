@@ -1,0 +1,159 @@
+basePath: /
+definitions:
+  main.Car:
+    properties:
+      id:
+        type: integer
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        type: integer
+      regNum:
+        type: string
+      year:
+        type: integer
+    type: object
+  main.CarNumbers:
+    properties:
+      regNums:
+        items:
+          type: string
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API для управления автомобилями и владельцами
+  title: Car Management API
+  version: "2.0"
+paths:
+  /cars:
+    get:
+      consumes:
+      - application/json
+      description: Получить список всех автомобилей
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Car'
+            type: array
+      summary: Получить все автомобили
+      tags:
+      - Cars
+    post:
+      consumes:
+      - application/json
+      description: Создать новую машину
+      parameters:
+      - description: Данные машины
+        in: body
+        name: car
+        required: true
+        schema:
+          $ref: '#/definitions/main.Car'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Car'
+      summary: Создать новую машину
+      tags:
+      - Cars
+  /cars/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удалить машину по её ID
+      parameters:
+      - description: ID машины
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Удалить машину
+      tags:
+      - Cars
+    get:
+      consumes:
+      - application/json
+      description: Получить информацию о машине по её ID
+      parameters:
+      - description: ID машины
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Car'
+      summary: Получить информацию о машине
+      tags:
+      - Cars
+    put:
+      consumes:
+      - application/json
+      description: Обновить информацию о машине по её ID
+      parameters:
+      - description: ID машины
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Новые данные машины
+        in: body
+        name: car
+        required: true
+        schema:
+          $ref: '#/definitions/main.Car'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Car'
+      summary: Обновить информацию о машине
+      tags:
+      - Cars
+  /carsbynum:
+    post:
+      consumes:
+      - application/json
+      description: Создает новые записи об автомобилях на основе переданных регистрационных
+        номеров
+      parameters:
+      - description: Список регистрационных номеров автомобилей в двойных кавычках
+          через запятую
+        in: body
+        name: carNumbers
+        required: true
+        schema:
+          $ref: '#/definitions/main.CarNumbers'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешно создано
+          schema:
+            type: string
+      summary: Создать автомобили по номерам
+      tags:
+      - Сars
+swagger: "2.0"
